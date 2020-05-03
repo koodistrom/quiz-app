@@ -14,7 +14,7 @@ export class QuestionService {
   }
 
 
-  fetchPlanets(callBackFunction: (result: any) => void): void {
+  fetchQuestions(callBackFunction: (result: any) => void): void {
     this.http.get('https://opentdb.com/api.php?amount=1&difficulty=medium').subscribe(callBackFunction);
   }
 
