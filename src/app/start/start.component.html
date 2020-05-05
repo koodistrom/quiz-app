@@ -1,0 +1,12 @@
+<p>start works!</p>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div *ngIf="name.invalid"> Name is too short. </div>
+
+    <input formControlName="name" placeholder="Name">
+
+
+    <button type="submit">Create new player</button>
+ </form>
+ <ul>
+    <li *ngFor="let player of players">{{player.name}}</li>
+  </ul>
