@@ -15,13 +15,15 @@ export class AppComponent implements AfterViewInit  {
   title = 'Quiz App';
   startPhase = true;
   players: Player[];
+  gameOptions;
   ngAfterViewInit(): void {
     this.players = this.start.players;
-    this.startPhase = this.start.startPhase;
+    this.gameOptions = this.start.gameOptions.value;
   }
 
   receiveStart($event: boolean) {
     this.startPhase = $event;
+    console.log(this.gameOptions);
   }
 
 

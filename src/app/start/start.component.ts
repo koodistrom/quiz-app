@@ -15,6 +15,7 @@ export class StartComponent implements OnInit {
   form = new FormGroup({
     name: new FormControl('Nancy', Validators.minLength(2)),
   });
+  gameOptions = new FormGroup({difficulty: new FormControl('medium')});
   players: Player[] = [];
   startPhase;
   constructor() { 
@@ -31,8 +32,12 @@ export class StartComponent implements OnInit {
   }
 
   start(): void{
-    console.log("ckidi")
-    this.startEvent.emit(false);
+
+    if(this.players.length>0){
+      this.startEvent.emit(false);
+      
+    }
+
   }
 
 

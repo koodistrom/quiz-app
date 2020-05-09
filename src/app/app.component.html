@@ -5,4 +5,4 @@
   </ul>
 
   <app-start *ngIf="startPhase; else elseBlock" (startEvent)="receiveStart($event)"></app-start>
-  <ng-template #elseBlock><app-game [players]="players"></app-game></ng-template>
+  <ng-template #elseBlock><app-game [gameOptions]="gameOptions" [players]="players"></app-game></ng-template>

@@ -14,8 +14,8 @@ export class QuestionService {
   }
 
 
-  fetchQuestions(callBackFunction: (result: any) => void): void {
-    this.http.get('https://opentdb.com/api.php?amount=1&difficulty=medium').subscribe(callBackFunction);
+  fetchQuestions(callBackFunction: (result: any) => void, difficulty: string): void {
+    this.http.get(`https://opentdb.com/api.php?amount=1&difficulty=${difficulty}`).subscribe(callBackFunction);
   }
 
 

@@ -1,10 +1,25 @@
 <p>start works!</p>
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div *ngIf="name.invalid"> Name is too short. </div>
-
     <input formControlName="name" placeholder="Name">
+
 
 
     <button type="submit">Create new player</button>
  </form>
+
+ <form [formGroup]="gameOptions">
+   <label>
+      <input type="radio" value="easy" formControlName="difficulty">
+      <span>Easy</span>
+   </label>
+   <label>
+      <input type="radio" value="medium" formControlName="difficulty">
+      <span>Medium</span>
+   </label>
+   <label>
+      <input type="radio" value="hard" formControlName="difficulty">
+      <span>Hard</span>
+   </label>
+</form>
  <button (click)="start()">Start!</button>

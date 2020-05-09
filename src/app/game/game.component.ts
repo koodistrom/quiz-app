@@ -8,7 +8,7 @@ import { Player } from '../player';
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.css']
 })
-export class GameComponent {
+export class GameComponent implements OnInit{
 
     category = '';
     question = '';
@@ -17,15 +17,25 @@ export class GameComponent {
     questionService;
     points: number = 0;
     answered: boolean;
+    playerInTurn = -1;
+    @Input() gameOptions;
     @Input() players: Player[];
     constructor(questionService: QuestionService) {
       this.questionService = questionService;
-      this.nextQuestion();
+
   
+    }
+
+    ngOnInit() {
+      console.log(this.gameOptions);
+      console.log(this.players);
+      console.log(this.playerInTurn );
+      this.nextQuestion();
     }
   
     nextQuestion(){
       this.answerOptions = [];
+
       this.questionService.fetchQuestions((r) => {
         r.results.forEach(element => {
           console.log(element);
@@ -38,8 +48,9 @@ export class GameComponent {
           this.shuffle(this.answerOptions);
           this.answered = false;
           this.correct = '';
+          this.playerInTurn = (this.playerInTurn + 1) % this.players.length;
         });
-      });
+      }, this.gameOptions.difficulty);
     }
   
     shuffle(array: any[]) {
@@ -66,7 +77,8 @@ export class GameComponent {
   
         if(answer.right){
           this.correct='Thats correct!';
-          this.points ++;
+          console.log(this.playerInTurn );
+          this.players[this.playerInTurn].points ++;
         }else{
           this.correct='Thats wrong!:(';
         }
