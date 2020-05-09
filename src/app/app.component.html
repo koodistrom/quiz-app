@@ -1,3 +1,8 @@
 <h1>{{title}}</h1>
-<app-start></app-start>
-<app-game></app-game>
+<h3>Players:</h3>
+<ul>
+    <li *ngFor="let player of players">{{player.name}} points: {{player.points}}</li>
+  </ul>
+
+  <app-start *ngIf="startPhase; else elseBlock" (startEvent)="receiveStart($event)"></app-start>
+  <ng-template #elseBlock><app-game [players]="players"></app-game></ng-template>

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { QuestionService } from '../question.service';
 import {Answer} from '../answer';
+import { Player } from '../player';
 
 @Component({
   selector: 'app-game',
@@ -16,7 +17,7 @@ export class GameComponent {
     questionService;
     points: number = 0;
     answered: boolean;
-  
+    @Input() players: Player[];
     constructor(questionService: QuestionService) {
       this.questionService = questionService;
       this.nextQuestion();
