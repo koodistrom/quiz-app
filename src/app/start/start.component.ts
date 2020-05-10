@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Player} from '../player';
+import { QuestionService } from '../question.service';
 
 @Component({
   selector: 'app-start',
@@ -15,14 +16,27 @@ export class StartComponent implements OnInit {
   form = new FormGroup({
     name: new FormControl('Nancy', Validators.minLength(2)),
   });
-  gameOptions = new FormGroup({difficulty: new FormControl('medium'), rounds: new FormControl()});
+  gameOptions = new FormGroup({difficulty: new FormControl('medium'), rounds: new FormControl(), category: new FormControl()});
   players: Player[] = [];
   startPhase;
-  constructor() { 
+  categories;
+  questionService;
+  constructor(questionService: QuestionService) {
+    this.questionService = questionService;
     this.startPhase = true;
+    this.getCategories();
+    
   }
   get name(): any {
     return this.form.get('name');
+  }
+
+  getCategories(): void{
+    this.questionService.fetchCategories((response)=>{
+      console.log(response);
+      this.categories = response.trivia_categories;
+      this.categories.push({id:-1, name: 'random'});
+    });
   }
 
   onSubmit(): void {

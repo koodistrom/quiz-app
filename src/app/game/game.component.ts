@@ -20,6 +20,7 @@ export class GameComponent implements OnInit{
     playerInTurn = 0;
     round = 1;
     gameOver = false;
+    selectedCategory: string;
     @Input() gameOptions;
     @Input() players: Player[];
     constructor(questionService: QuestionService) {
@@ -29,13 +30,16 @@ export class GameComponent implements OnInit{
     }
 
     ngOnInit() {
-      console.log(this.gameOptions);
-      console.log(this.players);
-      console.log(this.playerInTurn );
+
+      if(this.gameOptions.category == "-1"){
+        this.selectedCategory='';
+      }else{
+        this.selectedCategory = `&category=${this.gameOptions.category}`;
+      }
       this.getQuestion();
     }
   
-    nextQuestion(){
+    nextQuestion(): void {
 
       this.answered = false;
       this.correct = '';
@@ -52,7 +56,7 @@ export class GameComponent implements OnInit{
 
     }
 
-    getQuestion(){
+    getQuestion(): void {
       this.answerOptions = [];
       if(!this.gameOver){
         this.questionService.fetchQuestions((r) => {
@@ -68,7 +72,7 @@ export class GameComponent implements OnInit{
 
   
           });
-        }, this.gameOptions.difficulty);
+        },this.selectedCategory, this.gameOptions.difficulty);
       }
     }
 

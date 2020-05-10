@@ -26,6 +26,12 @@
          <input type="number" ng-min="1" ng-max="100" formControlName="rounds">
          <span>Rounds</span>
    </label>
+   <br/>
+   <label for="category">Category:</label>
+   <select class="form-control" id="category" formControlName="category" required>
+
+     <option *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
+   </select>
    
 
 </form>
