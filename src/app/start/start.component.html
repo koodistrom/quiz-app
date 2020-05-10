@@ -1,10 +1,7 @@
-<p>start works!</p>
+
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div *ngIf="name.invalid"> Name is too short. </div>
     <input formControlName="name" placeholder="Name">
-
-
-
     <button type="submit">Create new player</button>
  </form>
 
@@ -23,8 +20,8 @@
    </label>
    <br/>
    <label>
+         <span>Rounds: </span>
          <input type="number" ng-min="1" ng-max="100" formControlName="rounds">
-         <span>Rounds</span>
    </label>
    <br/>
    <label for="category">Category:</label>

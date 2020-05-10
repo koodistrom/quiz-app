@@ -14,7 +14,7 @@ export class StartComponent implements OnInit {
 
   @Output() startEvent = new EventEmitter<boolean>();
   form = new FormGroup({
-    name: new FormControl('Nancy', Validators.minLength(2)),
+    name: new FormControl( '', Validators.minLength(2)),
   });
   gameOptions = new FormGroup({difficulty: new FormControl('medium'), rounds: new FormControl(), category: new FormControl()});
   players: Player[] = [];
@@ -46,7 +46,7 @@ export class StartComponent implements OnInit {
 
   start(): void{
 
-    if(this.players.length>0 && this.gameOptions.value.rounds>0){
+    if(this.players.length>0 && this.gameOptions.value.rounds>0 && this.gameOptions.value.category!=null){
       this.startEvent.emit(false);
       
     }
