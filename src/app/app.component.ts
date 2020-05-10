@@ -18,12 +18,13 @@ export class AppComponent implements AfterViewInit  {
   gameOptions;
   ngAfterViewInit(): void {
     this.players = this.start.players;
-    this.gameOptions = this.start.gameOptions.value;
+    
   }
 
   receiveStart($event: boolean) {
+    this.gameOptions = this.start.gameOptions.value;
     this.startPhase = $event;
-    console.log(this.gameOptions);
+    
   }
 
 

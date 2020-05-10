@@ -21,5 +21,12 @@
       <input type="radio" value="hard" formControlName="difficulty">
       <span>Hard</span>
    </label>
+   <br/>
+   <label>
+         <input type="number" ng-min="1" ng-max="100" formControlName="rounds">
+         <span>Rounds</span>
+   </label>
+   
+
 </form>
  <button (click)="start()">Start!</button>

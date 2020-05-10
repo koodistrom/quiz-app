@@ -15,7 +15,7 @@ export class StartComponent implements OnInit {
   form = new FormGroup({
     name: new FormControl('Nancy', Validators.minLength(2)),
   });
-  gameOptions = new FormGroup({difficulty: new FormControl('medium')});
+  gameOptions = new FormGroup({difficulty: new FormControl('medium'), rounds: new FormControl()});
   players: Player[] = [];
   startPhase;
   constructor() { 
@@ -26,14 +26,13 @@ export class StartComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.form.value);
     this.players.push({points: 0, name: this.form.value.name});
-    console.log(this.players);
+
   }
 
   start(): void{
 
-    if(this.players.length>0){
+    if(this.players.length>0 && this.gameOptions.value.rounds>0){
       this.startEvent.emit(false);
       
     }

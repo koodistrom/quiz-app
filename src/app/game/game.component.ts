@@ -17,7 +17,9 @@ export class GameComponent implements OnInit{
     questionService;
     points: number = 0;
     answered: boolean;
-    playerInTurn = -1;
+    playerInTurn = 0;
+    round = 1;
+    gameOver = false;
     @Input() gameOptions;
     @Input() players: Player[];
     constructor(questionService: QuestionService) {
@@ -30,27 +32,50 @@ export class GameComponent implements OnInit{
       console.log(this.gameOptions);
       console.log(this.players);
       console.log(this.playerInTurn );
-      this.nextQuestion();
+      this.getQuestion();
     }
   
     nextQuestion(){
-      this.answerOptions = [];
 
-      this.questionService.fetchQuestions((r) => {
-        r.results.forEach(element => {
-          console.log(element);
-          this.category = element.category;
-          this.question = element.question;
-          this.answerOptions.push({right: true, text: element.correct_answer});
-          element.incorrect_answers.forEach(e => {
-            this.answerOptions.push({right: false, text: e});
+      this.answered = false;
+      this.correct = '';
+
+      if(this.playerInTurn === this.players.length-1){
+        if(this.round<this.gameOptions.rounds){
+          this.round++;
+        }else{
+          this.gameOver = true;
+        }
+      }
+      this.getQuestion();
+      this.playerInTurn = (this.playerInTurn + 1) % this.players.length;
+
+    }
+
+    getQuestion(){
+      this.answerOptions = [];
+      if(!this.gameOver){
+        this.questionService.fetchQuestions((r) => {
+          r.results.forEach(element => {
+            console.log(element);
+            this.category = this.decodeHTMLEntities(element.category);
+            this.question = this.decodeHTMLEntities(element.question);
+            this.answerOptions.push({right: true, text: this.decodeHTMLEntities(element.correct_answer)});
+            element.incorrect_answers.forEach(e => {
+              this.answerOptions.push({right: false, text: this.decodeHTMLEntities(e)});
+            });
+            this.shuffle(this.answerOptions);
+
+  
           });
-          this.shuffle(this.answerOptions);
-          this.answered = false;
-          this.correct = '';
-          this.playerInTurn = (this.playerInTurn + 1) % this.players.length;
-        });
-      }, this.gameOptions.difficulty);
+        }, this.gameOptions.difficulty);
+      }
+    }
+
+    decodeHTMLEntities(text) {
+      let textArea = document.createElement('textarea');
+      textArea.innerHTML = text;
+      return textArea.value;
     }
   
     shuffle(array: any[]) {

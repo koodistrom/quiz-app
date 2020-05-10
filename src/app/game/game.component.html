@@ -1,14 +1,18 @@
+<div *ngIf="!gameOver; else elseBlock">
+  <h3>Round: {{ round }} {{ players[playerInTurn].name }}'s turn</h3>
+  <h3>{{ category }}</h3>
+  <h2>{{ question }}</h2>
 
-<h3>{{players[playerInTurn].name}}'s turn</h3>
-<h3>{{category}}</h3>
-<h2>{{question}}</h2>
+  <ul>
+    <li *ngFor="let answer of answerOptions">
+      <button (click)="select($event, answer)">{{ answer.text }}</button>
+    </li>
+  </ul>
 
-<ul>
-  <li *ngFor="let answer of answerOptions"><button (click)="select($event, answer)">{{answer.text}}</button></li>
-</ul>
+  <h3>{{ correct }}</h3>
 
-<h3>{{correct}}</h3>
+  <br />
 
-<br>
-
-<button (click)="nextQuestion()">Next question</button>
+  <button (click)="nextQuestion()">Next question</button>
+</div>
+<ng-template #elseBlock>Game Over</ng-template>
