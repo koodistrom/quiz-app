@@ -31,11 +31,8 @@ export class GameComponent implements OnInit{
 
     ngOnInit() {
 
-      if(this.gameOptions.category == "-1"){
-        this.selectedCategory='';
-      }else{
-        this.selectedCategory = `&category=${this.gameOptions.category}`;
-      }
+      this.selectedCategory = this.gameOptions.category;
+      
       this.getQuestion();
     }
   
@@ -60,6 +57,7 @@ export class GameComponent implements OnInit{
       this.answerOptions = [];
       if(!this.gameOver){
         this.questionService.fetchQuestions((r) => {
+          console.log(r);
           r.results.forEach(element => {
             console.log(element);
             this.category = this.decodeHTMLEntities(element.category);

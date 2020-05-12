@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 
 @Injectable({
@@ -13,8 +13,15 @@ export class QuestionService {
   }
 
   fetchQuestions(callBackFunction: (result: any) => void, category: string, difficulty: string): void {
-    console.log(`https://opentdb.com/api.php?amount=1${category}&difficulty=${difficulty}`);
-    this.http.get(`https://opentdb.com/api.php?amount=1${category}&difficulty=${difficulty}`).subscribe(callBackFunction);
+  
+    let params;
+    if(category != "-1"){
+      params ={amount: "1", category: category, difficulty: difficulty};
+    }else{
+      params = {amount: "1", difficulty: difficulty};
+    }
+    console.log(params);
+    this.http.get(`https://opentdb.com/api.php`, {params: params}).subscribe(callBackFunction);
   }
 
   fetchCategories(callBackFunction: (result: any) => void): void {
